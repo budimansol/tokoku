@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\KategoriControlller;
+use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\ProdukController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,8 +27,11 @@ Route::middleware([
     })->name('home');
 });
 
-//kategori
 Route::group(['middleware' => 'auth'], function (){
-    Route::get('/kategori/data', [KategoriControlller::class, 'data'])->name('kategori.data');
-    Route::resource('/kategori', KategoriControlller::class);
+    //kategori
+    Route::get('/kategori/data', [KategoriController::class, 'data'])->name('kategori.data');
+    Route::resource('/kategori', KategoriController::class);
+    //produk
+    Route::get('/produk/data', [ProdukController::class, 'data'])->name('produk.data');
+    Route::resource('/produk', ProdukController::class);
 });

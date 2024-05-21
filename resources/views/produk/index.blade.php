@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
 @section('title')
-Daftar Kategori
+Daftar Produk
 @endsection
 
 @section('breadcrumb')
 @parent
-<li class="active">Daftar Kategori</li>
+<li class="active">Daftar Produk</li>
 @endsection
 
 @section('content')
@@ -18,13 +18,20 @@ Daftar Kategori
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <button onclick="addForm('{{route('kategori.store')}}')" class="btn btn-success xs btn-flat"><i class="fa fa-plus-circle"></i>Tambah</button>
+                    <button onclick="addForm('{{route('produk.store')}}')" class="btn btn-success xs btn-flat"><i class="fa fa-plus-circle"></i>Tambah</button>
                 </div>
                 <div class="box-body table-responsive">
                     <table class="table table-stiped table-border">
                         <thead>
                             <th width="5%">No</th>
+                            <th>Kode Produk</th>
+                            <th>Nama Produk</th>
                             <th>Kategori</th>
+                            <th>Merk</th>
+                            <th>Harga Beli</th>
+                            <th>Harga Jual</th>
+                            <th>Diskon</th>
+                            <th>Stok</th>
                             <th tidth="15%"><i class="fa fa-cog"></i></th>
                         </thead>
                         <tbody>
@@ -34,7 +41,7 @@ Daftar Kategori
                 </div>
             </div>
             </section>
-@includeIf('kategori.form')
+@includeIf('produk.form')
 @endsection
 
             @push('scripts')
@@ -45,11 +52,18 @@ Daftar Kategori
                 processing: true,
                 autoWidth: false,
                 ajax: {
-                    url: '{{route('kategori.data')}}',
+                    url: '{{route('produk.data')}}',
                 },
                 columns: [
                     {data: 'DT_RowIndex', searchable: false},
+                    {data: 'kode_produk'},
+                    {data: 'nama_produk'},
                     {data: 'nama_kategori'},
+                    {data: 'merk'},
+                    {data: 'harga_beli'},
+                    {data: 'harga_jual'},
+                    {data: 'diskon'},
+                    {data: 'stok'},
                     {data: 'aksi', searchable: false, sortable: false},
                 ]
         });
@@ -71,12 +85,12 @@ Daftar Kategori
 
     function addForm(url) {
         $('#modal-form').modal('show');
-        $('#modal-form .modal-title').text('Tambah Kategori');
+        $('#modal-form .modal-title').text('Tambah Produk');
         
         $('#modal-form form')[0].reset();
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('post');
-        $('#modal-form [name=nama_kategori]').focus();
+        $('#modal-form [name=nama_produk]').focus();
 
     }
 
@@ -87,11 +101,17 @@ Daftar Kategori
         $('#modal-form form')[0].reset();
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('put');
-        $('#modal-form [name=nama_kategori]').focus();
+        $('#modal-form [name=nama_produk]').focus();
 
         $.get(url)
             .done((response) => {
-                $('#modal-form [name=nama_kategori]').val(response.nama_kategori);
+                $('#modal-form [name=nama_produk]').val(response.nama_produk);
+                $('#modal-form [name=id_kategori]').val(response.id_kategori);
+                $('#modal-form [name=merk]').val(response.merk);
+                $('#modal-form [name=harga_beli]').val(response.harga_beli);
+                $('#modal-form [name=harga_jual]').val(response.harga_jual);
+                $('#modal-form [name=diskon]').val(response.diskon);
+                $('#modal-form [name=stok]').val(response.stok);
             })
             .fail((error) => {
                 alert('Tidak dapat menampilkan data');
