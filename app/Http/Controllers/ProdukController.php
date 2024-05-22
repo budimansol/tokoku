@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Kategori;
 use App\Models\Produk;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Barryvdh\DomPDF\PDF as DomPDFPDF;
 
 class ProdukController extends Controller
 {
@@ -26,6 +28,11 @@ class ProdukController extends Controller
         return datatables()
         ->of($produk)
         ->addIndexColumn()
+        ->addColumn('select_all', function ($produk) {
+            return '
+                <input type="checkbox" name="id_produk[]" value="'. $produk->id_produk .'">
+            ';
+        })
         ->addColumn('kode_produk', function ($produk) {
             return ' <span class="label label-success">'. $produk->kode_produk .'</span> ';
         })
@@ -48,7 +55,7 @@ class ProdukController extends Controller
                 ';
             
         })
-        ->rawColumns(['aksi', 'kode_produk'])
+        ->rawColumns(['aksi', 'kode_produk', 'select_all'])
         ->make(true);
     }
 
@@ -65,11 +72,12 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
-        $produk = Produk::latest()->first();
-        $request['kode_produk'] = 'P'. tambah_nol_didepan((int)$produk->id_produk+1, 6);
+        $produk = Produk::latest()->first() ?? new Produk();
+        $request['kode_produk'] = 'P'. tambah_nol_didepan((int)$produk->id_produk +1, 6);
+
         $produk = Produk::create($request->all());
 
-        return response()->json('Data Berhasil Disimpan', 200);
+        return response()->json('Data berhasil disimpan', 200);
     }
 
     /**
@@ -110,5 +118,27 @@ class ProdukController extends Controller
         $produk->delete();
 
         return response(null, 204);
+    }
+
+    public function deleteSelected(Request $request){
+        foreach ($request->id_produk as $id){
+            $produk = Produk::find($id);
+            $produk->delete();
+        }
+        return response(null, 204);
+    }
+
+    public function cetakBarcode(Request $request)
+    {
+        $dataproduk = array();
+        foreach ($request->id_produk as $id) {
+            $produk = Produk::find($id);
+            $dataproduk[] = $produk;
+        }
+
+        $no  = 1;
+        $pdf = PDF::loadView('produk.barcode', compact('dataproduk', 'no'));
+        $pdf->setPaper('a4', 'potrait');
+        return $pdf->stream('produk.pdf');
     }
 }

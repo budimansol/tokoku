@@ -18,26 +18,34 @@ Daftar Produk
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <button onclick="addForm('{{route('produk.store')}}')" class="btn btn-success xs btn-flat"><i class="fa fa-plus-circle"></i>Tambah</button>
+                    <div class="btn-group">
+                        <button onclick="addForm('{{route('produk.store')}}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i> Tambah</button>
+                        <button onclick="deleteSelected('{{ route ('produk.deleteSelected')}}')" class="btn btn-danger btn-flat"><i class="fa fa-trash"></i> Hapus</button>
+                        <button onclick="cetakBarcode('{{ route ('produk.cetakBarcode')}}')" class="btn btn-info btn-flat"><i class="fa fa-barcode"></i> Cetak Barcode</button>
+                        
+                    </div>
                 </div>
                 <div class="box-body table-responsive">
-                    <table class="table table-stiped table-border">
-                        <thead>
-                            <th width="5%">No</th>
-                            <th>Kode Produk</th>
-                            <th>Nama Produk</th>
-                            <th>Kategori</th>
-                            <th>Merk</th>
-                            <th>Harga Beli</th>
-                            <th>Harga Jual</th>
-                            <th>Diskon</th>
-                            <th>Stok</th>
-                            <th tidth="15%"><i class="fa fa-cog"></i></th>
-                        </thead>
-                        <tbody>
-                            
-                        </tbody>
-                    </table>
+                    <form action="" method="POST" class="form-produk">
+                        @csrf
+                        <table class="table table-stiped table-border">
+                            <thead>
+                                <th>
+                                    <input type="checkbox" name="select_all" id="select_all">
+                                </th>
+                                <th width="5%">No</th>
+                                <th>Kode Produk</th>
+                                <th>Nama Produk</th>
+                                <th>Kategori</th>
+                                <th>Merk</th>
+                                <th>Harga Beli</th>
+                                <th>Harga Jual</th>
+                                <th>Diskon</th>
+                                <th>Stok</th>
+                                <th tidth="15%"><i class="fa fa-cog"></i></th>
+                                </thead>
+                        </table>
+                    </form>
                 </div>
             </div>
             </section>
@@ -55,6 +63,7 @@ Daftar Produk
                     url: '{{route('produk.data')}}',
                 },
                 columns: [
+                    {data: 'select_all', searchable: false, sortable:false},
                     {data: 'DT_RowIndex', searchable: false},
                     {data: 'kode_produk'},
                     {data: 'nama_produk'},
@@ -80,6 +89,10 @@ Daftar Produk
                         return;
                     });
             }
+        });
+
+        $('[name=select_all]').on('click', function () {
+            $(':checkbox').prop('checked', this.checked);
         });
     });
 
@@ -133,6 +146,37 @@ Daftar Produk
             alert('Tidak dapat Menghapus Data');
             return;
         });
+        }
+    }
+
+    function deleteSelected(url) {
+        if ($('input:checked').length >= 1){
+            if (confirm('Yakin ingin Menghapus ?')){
+                $.post(url, $('.form-produk').serialize())
+                .done((response)=> {
+                    table.ajax.reload();
+                })
+                .fail((error)=>{
+                    alert('Tidak Dapat Menghapus Data');
+                    return;
+                })
+            }
+        } else{
+            alert('Pilih Data yang akan Dihapus');
+            return;
+        }
+    }
+
+    function cetakBarcode(url) {
+        if ($('input:checked').length < 1) {
+            alert('Pilih data yang akan dicetak');
+            return;
+        } else if ($('input:checked').length < 3) {
+            alert('Pilih minimal 3 data untuk dicetak');
+            return;
+        } else {
+            $('.form-produk')
+                .attr('target', '_blank').attr('action', url).submit();
         }
     }
                     

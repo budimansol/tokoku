@@ -33,5 +33,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::resource('/kategori', KategoriController::class);
     //produk
     Route::get('/produk/data', [ProdukController::class, 'data'])->name('produk.data');
+    Route::post('/produk/delete-selected', [ProdukController::class, 'deleteSelected'])->name('produk.deleteSelected');
+    Route::post('/produk/cetak-barcode', [ProdukController::class, 'cetakBarcode'])->name('produk.cetakBarcode');
     Route::resource('/produk', ProdukController::class);
 });
