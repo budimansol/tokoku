@@ -49,8 +49,8 @@ class ProdukController extends Controller
             
                 return '
                 <div class="btn-group">
-                    <button onclick="editForm (`'. route('produk.update', $produk->id_produk) .'`) " class="btn btn-info btn-flat"><i class="fa fa-pencil"></i></button>
-                    <button onclick="deleteData (`'. route('produk.destroy', $produk->id_produk) .'`)" class="btn btn-danger btn-flat"><i class="fa fa-trash"></i></button>
+                    <button type="button" onclick="editForm(`'. route('produk.update', $produk->id_produk) .'`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></button>
+                    <button type="button" onclick="deleteData(`'. route('produk.destroy', $produk->id_produk) .'`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
                 </div>
                 ';
             
@@ -137,7 +137,7 @@ class ProdukController extends Controller
         }
 
         $no  = 1;
-        $pdf = PDF::loadView('produk.barcode', compact('dataproduk', 'no'));
+        $pdf = Pdf::loadView('produk.barcode', compact('dataproduk', 'no'));
         $pdf->setPaper('a4', 'potrait');
         return $pdf->stream('produk.pdf');
     }
