@@ -3,7 +3,7 @@
 use SebastianBergmann\CodeCoverage\Report\Thresholds;
 
 function format_uang($angka){
-    return number_format($angka, 0, ',', '.');
+    return "Rp. " . number_format($angka, 0, ',', '.');
 }
 
 function terbilang($angka){
