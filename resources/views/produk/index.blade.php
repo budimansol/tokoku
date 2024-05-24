@@ -13,42 +13,40 @@ Daftar Produk
 
 <!-- Main row -->
 <div class="row">
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box">
-                <div class="box-header with-border">
-                    <div class="btn-group">
-                        <button onclick="addForm('{{route('produk.store')}}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i> Tambah</button>
-                        <button onclick="deleteSelected('{{ route ('produk.deleteSelected')}}')" class="btn btn-danger btn-flat"><i class="fa fa-trash"></i> Hapus</button>
-                        <button onclick="cetakBarcode('{{ route ('produk.cetakBarcode')}}')" class="btn btn-info btn-flat"><i class="fa fa-barcode"></i> Cetak Barcode</button>
-                        
-                    </div>
-                </div>
-                <div class="box-body table-responsive">
-                    <form action="" method="POST" class="form-produk">
-                        @csrf
-                        <table class="table table-stiped table-border">
-                            <thead>
-                                <th>
-                                    <input type="checkbox" name="select_all" id="select_all">
-                                </th>
-                                <th width="5%">No</th>
-                                <th>Kode Produk</th>
-                                <th>Nama Produk</th>
-                                <th>Kategori</th>
-                                <th>Merk</th>
-                                <th>Harga Beli</th>
-                                <th>Harga Jual</th>
-                                <th>Diskon</th>
-                                <th>Stok</th>
-                                <th tidth="15%"><i class="fa fa-cog"></i></th>
-                                </thead>
-                        </table>
-                    </form>
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <div class="btn-group">
+                    <button onclick="addForm('{{route('produk.store')}}')" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i> Tambah</button>
+                    <button onclick="deleteSelected('{{ route ('produk.deleteSelected')}}')" class="btn btn-danger btn-flat"><i class="fa fa-trash"></i> Hapus</button>
+                    <button onclick="cetakBarcode('{{ route ('produk.cetakBarcode')}}')" class="btn btn-info btn-flat"><i class="fa fa-barcode"></i> Cetak Barcode</button>   
                 </div>
             </div>
-            </section>
+            <div class="box-body table-responsive">
+                <form action="" method="POST" class="form-produk">
+                    @csrf
+                    <table class="table table-stiped table-border">
+                        <thead>
+                            <th>
+                                <input type="checkbox" name="select_all" id="select_all">
+                            </th>
+                            <th width="5%">No</th>
+                            <th>Kode Produk</th>
+                            <th>Nama Produk</th>
+                            <th>Kategori</th>
+                            <th>Merk</th>
+                            <th>Harga Beli</th>
+                            <th>Harga Jual</th>
+                            <th>Diskon</th>
+                            <th>Stok</th>
+                            <th tidth="15%"><i class="fa fa-cog"></i></th>
+                            </thead>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @includeIf('produk.form')
 @endsection
 

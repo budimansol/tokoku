@@ -40,6 +40,7 @@
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  @stack('css')
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -49,33 +50,32 @@
   @includeIf('layouts.sidebar')
 
   <!-- Content Wrapper. Contains page content -->
+  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        @yield('title')
-      </h1>
-      <ol class="breadcrumb">
-        @section('breadcrumb')
-        <li><a href="{{url('/')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-        @show
-        
-      </ol>
+        <h1>
+            @yield('title')
+        </h1>
+        <ol class="breadcrumb">
+            @section('breadcrumb')
+                <li><a href="{{ url('/') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+            @show
+        </ol>
     </section>
 
     <!-- Main content -->
     <section class="content">
+        
+        @yield('content')
 
-      @yield('content')
+    </section>
     <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+</div>
+<!-- /.content-wrapper -->
 
-  @includeIf('layouts.footer')
+@includeIf('layouts.footer')
 
-  <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
-  <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
 

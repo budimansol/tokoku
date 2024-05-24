@@ -10,32 +10,28 @@ Daftar Pengeluaran
 @endsection
 
 @section('content')
-
 <!-- Main row -->
 <div class="row">
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box">
-                <div class="box-header with-border">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <div class="btn-group">
                     <button onclick="addForm('{{route('pengeluaran.store')}}')" class="btn btn-success xs btn-flat"><i class="fa fa-plus-circle"></i>Tambah</button>
                 </div>
-                <div class="box-body table-responsive">
-                    <table class="table table-stiped table-border">
-                        <thead>
-                            <th width="5%">No</th>
-                            <th>Tanggal</th>
-                            <th>Deskripsi</th>
-                            <th>Nominal</th>
-                            <th tidth="15%"><i class="fa fa-cog"></i></th>
-                        </thead>
-                        <tbody>
-                            
-                        </tbody>
-                    </table>
-                </div>
             </div>
-            </section>
+            <div class="box-body table-responsive">
+                <table class="table table-stiped table-border">
+                    <thead>
+                        <th width="5%">No</th>
+                        <th>Tanggal</th>
+                        <th>Deskripsi</th>
+                        <th>Nominal</th>
+                        <th tidth="15%"><i class="fa fa-cog"></i></th>
+                    </thead>
+            </table>
+        </div>
+    </div>
+</section>
 @includeIf('pengeluaran.form')
 @endsection
 
