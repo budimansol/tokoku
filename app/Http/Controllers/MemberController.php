@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Member;
+use App\Models\Setting;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -138,9 +139,10 @@ class MemberController extends Controller
         }
 
         $datamember = $datamember->chunk(2);
-        
+        $setting    = Setting::first();
+
         $no  = 1;
-        $pdf = Pdf::loadView('member.cetak', compact('datamember', 'no'));
+        $pdf = PDF::loadView('member.cetak', compact('datamember', 'no', 'setting'));
         $pdf->setPaper(array(0, 0, 566.93, 850.39), 'potrait');
         return $pdf->stream('member.pdf');
     }

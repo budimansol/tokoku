@@ -38,6 +38,8 @@ class PembelianController extends Controller
             })
             ->addColumn('supplier', function ($pembelian) {
                 return $pembelian->supplier->nama;
+            })->editColumn('diskon', function ($pembelian) {
+                return $pembelian->diskon . ' %';
             })
             ->addColumn('aksi', function ($pembelian) {
                 return '
