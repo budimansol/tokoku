@@ -1,33 +1,32 @@
 <?php
 
-use SebastianBergmann\CodeCoverage\Report\Thresholds;
-
-function format_uang($angka){
+function format_uang ($angka) {
     return number_format($angka, 0, ',', '.');
 }
 
-function terbilang($angka){
-    $angka = (int) $angka;
-    $baca = array('','Satu','Dua','Tiga', 'Empat','Lima','Enam','Tujuh','Delapan','Sembilan','Sepuluh', 'Sebelas');
+function terbilang ($angka) {
+    $angka = abs($angka);
+    $baca  = array('', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan', 'sepuluh', 'sebelas');
     $terbilang = '';
 
-    if($angka < 12) {
+    if ($angka < 12) { // 0 - 11
         $terbilang = ' ' . $baca[$angka];
-    }elseif($angka < 20){
-        $terbilang = terbilang($angka-10) . ' Belas';
-    }elseif($angka < 100) {
-        $terbilang = terbilang($angka / 10) . ' Puluh' . terbilang($angka % 10);
-    }elseif($angka < 200){
-        $terbilang = ' Seratus' . terbilang($angka - 100);
-    }elseif($angka < 1000){
-        $terbilang = terbilang($angka/100) . ' Ratus' . terbilang($angka %100);
-    }elseif($angka < 2000){
-        $terbilang = ' Seribu' . terbilang($angka - 1000);
-    }elseif($angka < 1000000){
-        $terbilang = terbilang($angka/1000) . ' Ribu'. terbilang($angka%1000);
-    }elseif($angka < 1000000000){
-        $terbilang = terbilang($angka/1000000) . ' Juta' . terbilang($angka%1000000000);
+    } elseif ($angka < 20) { // 12 - 19
+        $terbilang = terbilang($angka -10) . ' belas';
+    } elseif ($angka < 100) { // 20 - 99
+        $terbilang = terbilang($angka / 10) . ' puluh' . terbilang($angka % 10);
+    } elseif ($angka < 200) { // 100 - 199
+        $terbilang = ' seratus' . terbilang($angka -100);
+    } elseif ($angka < 1000) { // 200 - 999
+        $terbilang = terbilang($angka / 100) . ' ratus' . terbilang($angka % 100);
+    } elseif ($angka < 2000) { // 1.000 - 1.999
+        $terbilang = ' seribu' . terbilang($angka -1000);
+    } elseif ($angka < 1000000) { // 2.000 - 999.999
+        $terbilang = terbilang($angka / 1000) . ' ribu' . terbilang($angka % 1000);
+    } elseif ($angka < 1000000000) { // 1000000 - 999.999.990
+        $terbilang = terbilang($angka / 1000000) . ' juta' . terbilang($angka % 1000000);
     }
+
     return $terbilang;
 }
 
@@ -56,6 +55,7 @@ function tanggal_indonesia($tgl, $tampil_hari = true)
     return $text; 
 }
 
-function tambah_nol_didepan($value, $threshold = null){
+function tambah_nol_didepan($value, $threshold = null)
+{
     return sprintf("%0". $threshold . "s", $value);
 }
